@@ -22,5 +22,31 @@ public class TollRoadDatabase {
      * This toll road's speed limit, in miles per hour
      */
     public static final double SPEED_LIMIT = 65.0;
+    public TollRoadDatabase(String eventFileName){
 
+    }
+    public void enterEvent(String tag, int exit, int time){
+
+    }
+    public void summaryReport(){
+
+    }
+    public void onRoadReport(){
+
+    }
+    public void printBills(){
+
+    }
+    public double bill(String tag){
+        return 0.0;
+    }
+    public void speederReport(){
+
+    }
+    public void printCustSummary(String tag){
+
+    }
+    public void printExitActivity(int exit){
+
+    }
 }
