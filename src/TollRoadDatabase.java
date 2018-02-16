@@ -23,7 +23,6 @@ public class TollRoadDatabase {
      */
     public static final double SPEED_LIMIT = 65.0;
     public TollRoadDatabase(String eventFileName){
-
     }
     public void enterEvent(String tag, int exit, int time){
 
