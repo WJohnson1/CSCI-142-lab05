@@ -2,10 +2,7 @@
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class TollRoadDatabase {
     /**
@@ -29,33 +26,55 @@ public class TollRoadDatabase {
      * This toll road's speed limit, in miles per hour
      */
     public static final double SPEED_LIMIT = 65.0;
+    private HashMap database1;
+    private HashMap database2;
     public TollRoadDatabase(String eventFileName){
         try (FileInputStream fileStr = new FileInputStream( eventFileName )){
-            ArrayList< TollRecord > database = new ArrayList<>();
+            HashMap database = new HashMap();
+            HashMap database2 = new HashMap();
             Scanner in = new Scanner( fileStr );
             while ( in.hasNext() ) {
                 String part = in.next();
-                System.out.println(part);
                 List<String> TollList = Arrays.asList(part.split(","));
-                int time =  Integer.parseInt(TollList.get(0));
                 String tag = TollList.get(1);
-                int exit =  Integer.parseInt(TollList.get(2));
-                TollRecord t = new TollRecord(tag,exit,time);
-                database.add(t);
+                if (database.containsKey(tag)) {
+                    int exit_time = Integer.parseInt(TollList.get(0));
+                    int off_exit = Integer.parseInt(TollList.get(2));
+                    TollRecord t = (TollRecord) database.get(tag);
+                    database.remove(tag);
+                    t.setOffExit(off_exit,exit_time);
+                    database2.put(tag,t);
+                }
+                else {
+                    int time = Integer.parseInt(TollList.get(0));
+                    int exit = Integer.parseInt(TollList.get(2));
+                    TollRecord t = new TollRecord(tag, exit, time);
+                    database.put(tag,t);
+                }
             }
+            this.database2 = database2;
+            this.database1 = database;
         }
         catch( IOException ioe ) {
             System.err.println( "Could not open file " + eventFileName );
         }
+
     }
     public void enterEvent(String tag, int exit, int time){
-
+        if (this.database1.containsKey(tag)){
+            TollRecord t = (TollRecord) this.database1.get(tag);
+            this.database1.remove(tag);
+            t.setOffExit(exit,time);
+            this.database2.put(tag,t);
+        }
     }
     public void summaryReport(){
-
+        System.out.println(database2.values());
     }
     public void onRoadReport(){
+        for(TollRecord t: this.database2.values()){
 
+        }
     }
     public void printBills(){
 
@@ -63,6 +82,7 @@ public class TollRoadDatabase {
     public double bill(String tag){
         return 0.0;
     }
+
     public void speederReport(){
 
     }
@@ -74,5 +94,6 @@ public class TollRoadDatabase {
     }
     public static void main(String[] args){
         TollRoadDatabase t = new TollRoadDatabase("C:\\Users\\William\\Desktop\\Git\\lab05-WCJ7833\\data\\5guys.txt");
+        t.summaryReport();
     }
 }
