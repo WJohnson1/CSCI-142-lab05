@@ -1,6 +1,6 @@
 /* A few useful items are provided to you. You must write the rest. */
 
-public class TollRecord {
+public class TollRecord implements Comparable{
 
     /**
      * For printing toll records in reports
@@ -9,10 +9,10 @@ public class TollRecord {
     private static final String TOLL_RECORD_FORMAT = "[%11s] on #%2d, time %5d";
     private static final String OFF_FORMAT = "; off #%2d, time %5d";
     private String tag;
-    private static int onExit;
-    private static int offExit = -1;
-    private static int onTime;
-    private static int offTime = -1;
+    private int onExit;
+    private int offExit = -1;
+    private int onTime;
+    private int offTime = -1;
     /**
      * Value of uninitialized integer fields in this record
      */
@@ -22,6 +22,7 @@ public class TollRecord {
         this.onExit = onExit;
         this.onTime = onTime;
     }
+
     public void setOffExit(int offExit, int offTime){
         this.offExit = offExit;
         this.offTime = offTime;
@@ -62,15 +63,29 @@ public class TollRecord {
         }
     }
     public String report(){
-        return "[" + this.tag + "] on " + this.getOnExit() + ", time " + this.getOnTime() + "; off " + this.getOffExit()
-                +", time" + this.getOffExit();
+        String f = String.format(TOLL_RECORD_FORMAT,this.getTag(),this.getOnExit(),this.getOnTime());
+        if (this.offExit != -1) {
+            String l = String.format(OFF_FORMAT, this.getOffExit(), this.getOffTime());
+            return f + l;
+        }
+        else {
+            return f;
+        }
     }
+
     public int hashCode(){
-        return 0;
+        return this.getTag().charAt(0);
     }
-    public int compareTo(TollRecord o){
-        return 0;
+
+    @Override
+    public int compareTo(Object o) {
+        TollRecord t = (TollRecord) o;
+        if (this.getTag().equals(t.getTag())){
+            return this.getOnTime() - t.getOnTime();
+        }
+        return this.hashCode()-t.hashCode();
     }
+
     public static void main(String[] args){
 
     }
