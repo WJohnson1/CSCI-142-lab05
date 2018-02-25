@@ -156,7 +156,7 @@ public class TollRoadDatabase {
 
     }
     public static void main(String[] args){
-        TollRoadDatabase t = new TollRoadDatabase("C:\\Users\\William\\Desktop\\Git\\lab05-WCJ7833\\data\\5guys.txt");
+        TollRoadDatabase t = new TollRoadDatabase("C:\\Users\\William\\Desktop\\Git\\lab05-WCJ7833\\data\\random1000.txt");
         t.summaryReport();
         t.onRoadReport();
         t.speederReport();
@@ -166,6 +166,7 @@ public class TollRoadDatabase {
             System.out.println("'b <string>' to see bill for license tag");
             System.out.println("'e <number>' to see activity at exit");
             System.out.println("'q' to quit");
+            System.out.print("> ");
             String user = in.next();
             if (user.equals("b")){
                 String tag = in.next();

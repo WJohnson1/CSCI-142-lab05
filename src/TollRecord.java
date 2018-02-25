@@ -74,7 +74,7 @@ public class TollRecord implements Comparable{
     }
 
     public int hashCode(){
-        return this.getTag().charAt(0);
+        return this.getTag().charAt(0)*100 + this.getTag().charAt(1);
     }
 
     @Override
