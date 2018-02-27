@@ -1,6 +1,6 @@
 /**
+ * A class that creates the ExitInfo for a TollRecord
  * @author James Heliotis
- * <p>
  * February 2018
  */
 public class ExitInfo {
